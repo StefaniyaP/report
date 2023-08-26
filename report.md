@@ -20,7 +20,7 @@ def wallis_multiplier(i):
 
 При разнице последних значений произведения $\pi / 2$ менее `1e-7` вычисленное значение $\pi = 3.1411963131348553$.
 
-![График сходимости](https://github.com/still-coding/report_demo/blob/e2c8f4950479afde2be4b80a58be052a2af798e6/img/convergence_plot.png)
+![График сходимости](https://raw.githubusercontent.com/still-coding/report_demo/e2c8f4950479afde2be4b80a58be052a2af798e6/img/convergence_plot.png)
 
 ## Вывод
 Произведение Валлиса сходится очень медленно, поэтому рекомендуется использовать более эффективные методы вычисления числа $\pi$.
