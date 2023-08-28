@@ -31,7 +31,11 @@ def check_executables():
 
 
 def check_files(md_filename):
-    required_files = (f"{md_filename}.md", f"{TITLE_TEX_FILE_NAME}.tex", HEADERS_FILE_NAME)
+    required_files = (
+        f"{md_filename}.md",
+        f"{TITLE_TEX_FILE_NAME}.tex",
+        HEADERS_FILE_NAME,
+    )
     result = True
     for filename in required_files:
         if not exists(f"./{filename}"):
@@ -41,10 +45,10 @@ def check_files(md_filename):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Report generator')
-    parser.add_argument('filename', type=str, help='.md file name without extension')
-    parser.add_argument('--title', help='Include title sheet', action='store_true')
-    parser.add_argument('--toc', help='Include table of contents', action='store_true')
+    parser = argparse.ArgumentParser(description="Report generator")
+    parser.add_argument("filename", type=str, help=".md file name without extension")
+    parser.add_argument("--title", help="Include title sheet", action="store_true")
+    parser.add_argument("--toc", help="Include table of contents", action="store_true")
     args = parser.parse_args()
     return args.filename, args.title, args.toc
 
@@ -58,7 +62,7 @@ def generate_title_sheet():
     else:
         print("Done!")
         system(SET_STARTPAGE_TO_2_CMD)
-    
+
     for extension in FILES_TO_RM:
         filename = TITLE_TEX_FILE_NAME + extension
         if exists(filename):
@@ -73,21 +77,22 @@ def main():
     report_filename, title, toc = parse_args()
     if not check_files(report_filename):
         return
-    
+
     system(CLEAR_LOG_CMD)
 
     if title:
         if not generate_title_sheet():
             return
-                
+
     print("Generating report...", end=" ")
-    generate_report_cmd = f"pandoc --pdf-engine=xelatex -H {HEADERS_FILE_NAME} {report_filename}.md -o {TEMP_FILENAME}{' --toc' if toc else ''} 2>> {LOG_FILE_NAME}"
+    generate_report_cmd = f"pandoc --pdf-engine=xelatex -H {HEADERS_FILE_NAME} \
+        {report_filename}.md -o {TEMP_FILENAME}{' --toc' if toc else ''} 2>> {LOG_FILE_NAME}"
     if system(generate_report_cmd):
         print(CMD_EXEC_ERROR_MSG)
         return
     else:
         print("Done!")
-    
+
     output_filename = f"{report_filename}.pdf"
 
     if title:
@@ -102,11 +107,11 @@ def main():
             remove(TEMP_FILENAME)
             print("Done!")
     else:
-        rename(TEMP_FILENAME, output_filename)        
-    
+        rename(TEMP_FILENAME, output_filename)
+
     if exists(LOG_FILE_NAME):
         remove(LOG_FILE_NAME)
-        
+
     print("All done, have a nice day!")
 
 
