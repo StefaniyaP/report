@@ -53,6 +53,11 @@ def parse_args():
     return args.filename, args.title, args.toc
 
 
+def delete_file(filename):
+    if exists(filename):
+        remove(filename)
+
+
 def generate_title_sheet():
     print("Generating title...", end=" ")
     result = True
@@ -64,9 +69,7 @@ def generate_title_sheet():
         system(SET_STARTPAGE_TO_2_CMD)
 
     for extension in FILES_TO_RM:
-        filename = TITLE_TEX_FILE_NAME + extension
-        if exists(filename):
-            remove(filename)
+        delete_file(TITLE_TEX_FILE_NAME + extension)
     return result
 
 
@@ -109,9 +112,7 @@ def main():
     else:
         rename(TEMP_FILENAME, output_filename)
 
-    if exists(LOG_FILE_NAME):
-        remove(LOG_FILE_NAME)
-
+    delete_file(LOG_FILE_NAME)
     print("All done, have a nice day!")
 
 
