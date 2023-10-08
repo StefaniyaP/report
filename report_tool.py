@@ -99,7 +99,7 @@ def main():
     output_filename = f"{report_filename}.pdf"
 
     if title:
-        print("Concatenatig title with report...", end=" ")
+        print("Concatenating title with report...", end=" ")
         system(REMOVE_LAST_LINE_CMD)
         concat_cmd = f"pdftk {TITLE_TEX_FILE_NAME}.pdf {TEMP_FILENAME} cat output {output_filename} >> {LOG_FILE_NAME}"
         if system(concat_cmd):
